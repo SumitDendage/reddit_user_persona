@@ -1,4 +1,4 @@
-# reddit_user_persona
+# Reddit_User_Persona
 
 A Python-based command-line tool that analyzes Reddit user activity to generate a professional, citation-backed **User Persona** report. This project fulfills the criteria outlined in the internship assignment, including data scraping, content analysis, and persona generation with referenced source material.
 
@@ -48,6 +48,7 @@ Each generated persona includes:
 ## 🗂️ Project Structure
 
 reddit_user_persona/
+
 ├── main.py # Entry point for execution
 ├── reddit_loader.py # Reddit API interactions (fetch user data)
 ├── persona_builder.py # Builds persona from comments/posts
@@ -56,8 +57,7 @@ reddit_user_persona/
 ├── output/ # Stores generated persona .txt and .html files
 └── README.md # This documentation
 
-yaml
-Copy code
+
 
 ---
 
@@ -112,6 +112,7 @@ bash
 Copy code
 output/kojied_persona.txt
 output/kojied_persona.html
+
 📝 Output Example (Simplified)
 less
 Copy code
@@ -133,12 +134,10 @@ Frequent Subreddits:
 
 Interests:
 - Technology, psychology, mental health, fiction writing
+
 📁 Sample Data
 The output/ directory includes sample .txt and .html personas generated from public Reddit profiles such as:
-
 kojied
-
 Hungry-Move-6603
 
-Each profile file includes cited comments/posts supporting the personality traits and behavioral insights.
 
