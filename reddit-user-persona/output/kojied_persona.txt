@@ -1,0 +1,39 @@
+
+You are a professional user research analyst.
+
+Based on the Reddit user's posts and comments provided below, build a structured and insightful **User Persona**. Your output must include the following characteristics:
+
+1. Interests  
+2. Personality traits  
+3. Writing style  
+4. Preferred topics  
+5. Emotional tone  
+6. Optional (if evident): Job, age, location, or political views
+
+🔎 For **each characteristic**, include:
+- A clear and concise description of the trait  
+- A **direct quote** from a Reddit **post or comment** that supports this trait
+
+📌 Format your response exactly like this:
+
+- **Interests**: The user is passionate about artificial intelligence, programming, and open-source models.  
+  **Cited from**: "I've been experimenting with Mistral and fine-tuning small LLMs on my own dataset."
+
+- **Personality traits**: Analytical, curious, and community-driven.  
+  **Cited from**: "Does anyone have benchmarks for LLaMA-3 vs GPT-NeoX? I'd love to dig into that."
+
+- **Writing stylistic Style**: Allows users to write more specific writing, i.e.: "It's my passion, but I want to write more."
+
+- **Personal style**: Allows users to write more specific writing, i.e.: "I love writing and I'm passionate about machine learning. I think machine learning is really cool."
+
+- **Cultural  - Cultural  - Personal  - Personal  - Social  - Personal  - Social  - Social  - Social  - Social  - Social  - Social
+
+🔎 If you want to be notified when new features are added to your system, you can follow us on Twitter, like us on Facebook, and follow us on Google+.
+
+🔎 Follow this page for additional information to get notified when new features are added to your system.
+
+🔎 Follow this page for additional information to get notified when new features are added to your system.
+
+If you're a real-life customer, you can always connect with us on our Facebook page here and follow us on Google+.
+
+If you're a real-life customer, you can always connect with us on our Facebook page here and follow us

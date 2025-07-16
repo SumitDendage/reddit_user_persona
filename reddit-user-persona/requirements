@@ -1,0 +1,6 @@
+transformers
+torch
+python-dotenv
+praw
+beautifulsoup4
+HUGGINGFACEHUB_API_TOKEN=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
