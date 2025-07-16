@@ -49,12 +49,19 @@ Each generated persona includes:
 
 reddit_user_persona/
 
+
 ├── main.py # Entry point for execution
-├── reddit_loader.py # Reddit API interactions (fetch user data)
+
+├── reddit_loader.py # Reddit API interactions (fetch user data) 
+
 ├── persona_builder.py # Builds persona from comments/posts
-├── utils.py # Helper functions (save to file, clean text)
-├── .env.example # Template for API credentials
-├── output/ # Stores generated persona .txt and .html files
+
+├── utils.py # Helper functions (save to file, clean text) 
+
+├── .env.example # Template for API credentials 
+
+├── output/ # Stores generated persona .txt and .html files 
+
 └── README.md # This documentation
 
 
