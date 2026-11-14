@@ -1,150 +1,82 @@
-# Reddit_User_Persona
+# Reddit User Persona Generator
 
-A Python-based command-line tool that analyzes Reddit user activity to generate a professional, citation-backed **User Persona** report. This project fulfills the criteria outlined in the internship assignment, including data scraping, content analysis, and persona generation with referenced source material.
+A command-line tool that reads a Reddit user's public posts and comments and turns them into an evidence-based **user persona** — interests, personality, writing style, communities and motivations — where **every claim cites the post or comment it came from**.
 
----
+![Python](https://img.shields.io/badge/Python-3.9+-3776AB?logo=python&logoColor=white)
+![PRAW](https://img.shields.io/badge/Reddit%20API-PRAW-FF4500?logo=reddit&logoColor=white)
+![LLM](https://img.shields.io/badge/LLM-OpenAI--compatible-412991?logo=openai&logoColor=white)
 
-## 📌 Overview
+## How it works
 
-This tool takes a Reddit user’s profile URL, extracts their public posts and comments using the Reddit API (via `PRAW`), and generates a detailed **User Persona** profile. Each persona includes cited insights into the user’s personality traits, tone, interests, and writing style — mimicking the structure of real-world marketing personas.
+```text
+profile URL ─> PRAW (read-only) ─> recent posts [P1..] + comments [C1..] ─> LLM prompt ─> persona.md / .txt / .html
+```
 
----
+1. **Collect** – the user's latest posts and comments are fetched with the official Reddit API through [PRAW](https://praw.readthedocs.io/), in read-only mode.
+2. **Label** – every item gets an ID (`P1`, `C7`, …) with its subreddit, so the model can cite it.
+3. **Analyse** – an OpenAI-compatible chat model writes the persona under strict rules: use only the supplied activity, cite an ID and a short quote for each trait, and say "Not evident" rather than guess demographics.
+4. **Export** – the persona is saved as Markdown, plain text and a styled HTML page, followed by a **Sources** list linking every cited item back to Reddit.
 
-## 🎯 Objectives
-
-This project was developed in response to the following internship task:
-
-- [x] Accept Reddit user profile URL as input.
-- [x] Scrape posts and comments made by the user.
-- [x] Build a **User Persona** from this activity.
-- [x] Output the persona to a `.txt` file.
-- [x] For every characteristic, **cite** the Reddit post or comment used.
-- [x] Provide a professional and readable `README.md`.
-
----
-
-## 🧠 What is a User Persona?
-
-A **User Persona** is a detailed, fictional character representing real users, derived from behavioral data. In this case, we generate personas based on Reddit users' language, tone, content, and subreddit interests.
-
-Each generated persona includes:
-- Basic info (Reddit username)
-- Key personality traits (with cited examples)
-- Behavioral habits and subreddit activity
-- Communication tone and writing style
-- Interests and discussion topics
-
----
-
-## 🛠️ Built With
-
-- **Python 3.7+**
-- [`PRAW`](https://praw.readthedocs.io/) - Python Reddit API Wrapper
-- `dotenv` for environment variable handling
-- Standard libraries: `re`, `os`, `datetime`, `html`, etc.
-
----
-
-## 🗂️ Project Structure
-
-reddit_user_persona/
-
-
-├── main.py # Entry point for execution
-
-├── reddit_loader.py # Reddit API interactions (fetch user data) 
-
-├── persona_builder.py # Builds persona from comments/posts
-
-├── utils.py # Helper functions (save to file, clean text) 
-
-├── .env.example # Template for API credentials 
-
-├── output/ # Stores generated persona .txt and .html files 
-
-└── README.md # This documentation
-
-
-
----
-
-## ⚙️ Setup Instructions
-
-### 1. Clone the Repository
+## Getting started
 
 ```bash
 git clone https://github.com/SumitDendage/reddit_user_persona.git
 cd reddit_user_persona
-2. Set Up a Virtual Environment
-bash
-Copy code
-python3 -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
-3. Install Dependencies
-bash
-Copy code
+python -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
-4. Configure Reddit API Access
-Go to Reddit Apps.
+cp .env.example .env
+```
 
-Create a new app (script type) and obtain:
+Fill in `.env`:
 
-Client ID
+| Variable | Where to get it |
+|---|---|
+| `REDDIT_CLIENT_ID`, `REDDIT_CLIENT_SECRET` | Create a **script** app at <https://www.reddit.com/prefs/apps> |
+| `REDDIT_USER_AGENT` | Any descriptive string, e.g. `reddit-user-persona/1.0 (by u/you)` |
+| `OPENAI_API_KEY` | Your LLM provider's API key |
+| `OPENAI_MODEL` | Optional, defaults to `gpt-4o-mini` |
+| `OPENAI_BASE_URL` | Optional, to use another OpenAI-compatible provider |
 
-Client Secret
+## Usage
 
-User Agent
+```bash
+python main.py https://www.reddit.com/user/kojied/
+python main.py kojied --posts 30 --comments 80 --output personas
+```
 
-Copy .env.example to .env and fill in your credentials:
+Output:
 
-env
-Copy code
-REDDIT_CLIENT_ID=your_client_id
-REDDIT_CLIENT_SECRET=your_client_secret
-REDDIT_USER_AGENT=your_user_agent
-🚀 Usage
-Run the script via:
-
-bash
-Copy code
-python main.py
-When prompted, enter a Reddit profile URL:
-
-ruby
-Copy code
-Enter Reddit user profile URL: https://www.reddit.com/user/kojied/
-After analysis, persona files will be saved to:
-
-bash
-Copy code
+```text
+output/kojied_persona.md
 output/kojied_persona.txt
 output/kojied_persona.html
+```
 
-📝 Output Example (Simplified)
-less
-Copy code
-Username: kojied
+Example of the format (illustrative):
 
-Top Personality Traits:
-- Curious: Frequently participates in r/AskScience and r/TodayILearned
-  → Cited Post: "Can someone explain how CRISPR works in layman terms?"
-- Supportive: Responds empathetically in mental health communities.
-  → Cited Comment: "You're not alone. I've been there and it's tough."
+```markdown
+## Interests
+- **Local LLMs and fine-tuning** — experiments with small open models. [P3] "fine-tuned a 7B model on my own notes"
 
-Writing Style:
-- Semi-formal, thoughtful, emotionally aware
+## Most active communities
+- r/LocalLLaMA, r/MachineLearning [P3] [C12]
+```
 
-Frequent Subreddits:
-- r/AskScience
-- r/relationships
-- r/books
+## Project structure
 
-Interests:
-- Technology, psychology, mental health, fiction writing
+```text
+├── main.py             # CLI: parse the profile, run the pipeline, save files
+├── reddit_loader.py    # PRAW client, username parsing, post/comment collection
+├── persona_builder.py  # prompt construction and LLM call
+├── utils.py            # Markdown / text / HTML export with a sources list
+├── requirements.txt
+└── .env.example
+```
 
-📁 Sample Data
-The output/ directory includes sample .txt and .html personas generated from public Reddit profiles such as:
-kojied
-Hungry-Move-6603
+## Responsible use
 
+The tool only reads public activity, but a persona is still a profile of a real person. Use it for research or product work on aggregated insights, respect Reddit's API terms, and don't publish personas of private individuals.
 
+## Author
+
+**Sumit Dendage** · [GitHub](https://github.com/SumitDendage) · [LinkedIn](https://www.linkedin.com/in/sumit-dendage-636a50201) · [Medium](https://dendagesumitbalkrishna123.medium.com)
